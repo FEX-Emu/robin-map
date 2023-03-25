@@ -1588,8 +1588,6 @@ class robin_hash : private Hash, private KeyEqual, private GrowthPolicy {
    * last_bucket() == true.
    */
   bucket_entry* static_empty_bucket_ptr() noexcept {
-    static bucket_entry empty_bucket(true);
-    tsl_rh_assert(empty_bucket.empty());
     return &empty_bucket;
   }
 
@@ -1606,6 +1604,7 @@ class robin_hash : private Hash, private KeyEqual, private GrowthPolicy {
    * Allocator manually.
    */
   bucket_entry* m_buckets;
+  bucket_entry empty_bucket{true};
 
   /**
    * Used a lot in find, avoid the call to m_buckets_data.size() which is a bit
